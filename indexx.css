@@ -1,0 +1,121 @@
+.ifShow{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width :100%;
+    height:100vh;
+    flex-wrap: wrap;    
+}
+
+body{
+    overflow: auto;
+}
+.divShow{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.topoMenu{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #248;
+    height: 30px;
+    color: white;
+}
+.menuLogo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logoImg{
+    width:40%;
+    height: 60%;
+    padding : 7px 7px 0 7px ;
+}
+.menuConfig{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.menuUser{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-direction: column;
+    font-size: small;
+}
+
+.menuBase{
+    position: absolute;
+    display : flex;
+    align-items: flex-start;
+    justify-items: center;
+    flex-direction: column;
+    top : 50px;
+    width: 170px;
+    height: 130px;
+}
+.menuBase .menuSeta{
+    position: relative;
+    display: flex;
+    left :75%;
+    width: 20px;
+    height: 20px;
+    top : -10px !important;
+    rotate: 45deg;
+    background-color : rgb(233, 233, 233);
+}
+.menuBase .menuItems{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width :100%;
+    height: fit-content;
+    background-color: inherit;
+    padding : 0px 0px 0px 0px;
+}
+.menuItems .menuItem{
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    margin-bottom: 0px;
+    width :100%;
+    height: 30px !important;
+    background-color: rgb(233, 233, 233);
+}
+.menuItem:hover{
+    background-color: rgb(220, 220, 220);
+    animation: .02;
+}
+.menuItem .imgOpcao{
+    display: flex;
+    position: absolute;
+}
+.menuItem img{
+    display: block;
+    margin-left: 7px;
+}
+.menuItem label{
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    margin-left: 10px;
+    color: rgb(109, 109, 109);
+}
+
+.divCabeca{
+    display: flex;
+    width: 100%;
+    height: 70px;
+    background-color: #248;
+}
+.tarjaTitulo{
+    display: flex;
+    width: 100%;
+    height:  30px;
+    background-color: #248;
+}

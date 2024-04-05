@@ -1,0 +1,262 @@
+*{
+    border: none;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+.divTituloJanela{
+    display : flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 150%;
+    font-weight: bolder;
+    color : white;
+    width : 100%;
+    height:  35px;
+    background-color: rgb(95, 95, 255);
+    border-radius: 10px 10px 0px  0;
+}
+.divJanela{
+    display: flex;
+    justify-content: center;
+    width :100%
+}
+.divGeral{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 800px;
+    background-color: rgb(255, 255, 255);
+}
+.divBlocoA{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: row;
+    width:100%;
+    height : 460px;
+    background-color: rgb(253, 253, 253);
+    padding: 5px 0px 0px 0px ;
+}
+.divBlocoB{
+    display: flex;
+    text-align: left;
+    font-size: x-large;
+    padding: 7px 0 0 4px;
+    justify-content: flex-start;
+    flex-direction: column; 
+    width: 100%;   
+    height: 50px;
+    background-color: rgb(204, 204, 204);   
+    border-radius: 0 0 10px 10px;
+}
+
+.divBlocoD{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column; 
+    width : 40%;
+    height: 450px;
+    background-color: rgb(255, 248, 236);
+    padding: 0 0 0 3px ;    
+}
+.divBlocoE{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column; 
+    width : 100%;
+    height: 480px;
+    background-color: rgb(245, 245, 245); 
+    
+}
+.divJE{
+
+    width : 100%;
+    height : 70px;
+    background-color: rgb(209, 209, 209);
+    margin : 0px 0px 4px 0;
+}
+
+.divJEI{
+    display: flex;
+    display : flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(253, 225, 215);
+
+}
+
+.divTotal{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 230%;
+    font-weight: bold;
+    padding : 0px 5px 0 3px ;
+    background-color: rgb(204, 204, 204);
+    border-radius: 10px;
+}
+
+.divPagto{
+    display: Flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.divFecha{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px 5px 0px 5px;
+    border-radius: 10px;
+}
+
+.divAcrescimo{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-direction: column !important;
+    font-size: xx-large;
+    font-weight: bold;
+    padding : 0px 5px 0 3px ;
+    background-color: rgb(204, 204, 204);
+    border-radius: 10px;
+}
+
+.divDesconto{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-direction: column !important;
+    font-size: xx-large;
+    font-weight: bold;
+    padding : 0px 5px 0 3px ;
+    background-color: rgb(204, 204, 204);
+    border-radius: 10px;
+}
+.divBuscar{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: xx-large;
+    font-weight: bold;
+    padding : 0px 5px 0 3px ;
+    background-color: rgb(204, 204, 204);
+    border-radius: 10px;
+}
+
+.divPreco{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: xx-large;
+    font-weight: bold;
+    padding : 0px 5px 0 3px ;
+    background-color: rgb(204, 204, 204);
+    border-radius: 10px;
+}
+
+.divSetProduto{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 4px 3px 4px 4px ;
+    border-radius: 10px;
+    background-color: rgb(225, 225, 225);
+}
+
+.divSetProduto .divQuantidade{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: xx-large;
+    font-weight: bold;
+    padding : 0px 0 0 3px ;
+    background-color: rgb(204, 204, 204);
+    border-radius: 10px;
+}
+
+.divFecha{
+    display: flex;
+    flex-direction: row;
+}
+
+.divDesconto{
+    display: flex;
+    flex-direction: row;
+}
+
+.divLinhaProdutos{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 40px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 7px;
+}
+
+.divLinhaProdutos:nth-child(odd){
+    background-color: rgb(228, 228, 228);
+}
+
+.divLinhaProdutos:nth-child(even){
+    background-color: rgb(238, 238, 238);
+}
+
+.divLinhaProduto{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+}
+.divLinhaPreco{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+}
+
+.divLinhaTotal{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+    padding: 0 4px 0 0;
+}
+
+.divLinhaQuantidade{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.divBtnFecha{
+    display : flex ;
+    align-items: center;
+    justify-content: flex-start;
+    width :50%;
+    gap : 4px;
+}
+
+.teste{
+    align-items: center;
+    justify-content : center;
+    vertical-align: middle;
+    flex-direction : column;
+    font-size: ;
+}
