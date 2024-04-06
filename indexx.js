@@ -17,7 +17,9 @@ const menuTodos = document.querySelectorAll('.divLinMenuA')
 const menuIdUser = document.querySelector('#menuIdUser')
 const menuNomeUser = document.querySelector('#menuNomeUser')
 const arqConfig = './config.cfg'
-var apiServer = undefined
+var apiServer = undefined;
+
+
 fetch(arqConfig)
 .then(res=>res.json())
 .then(res=>{
@@ -35,8 +37,9 @@ btnMenu.addEventListener('click',(evt)=>{
    divMenu.classList.toggle('ocultar')
 })
 menuop1.addEventListener('click',(evt)=>{
-    tokenOk()
-    janelaFrame.setAttribute('src','./colaboradores/colab.html')
+    new Promise((resolve,reject)=>{
+        resolve(tokenOk())
+    }).then(janelaFrame.setAttribute('src','./colaboradores/colab.html'))
 })
 menuop2.addEventListener('click',(evt)=>{
     tokenOk()
