@@ -475,14 +475,12 @@ class LoginUser {
     static LoginLuNome = undefined
     static tokenAtual = undefined
     static tokenValidade = (60000*100)
-    static apiServer = sessionStorage.getItem('servidor')
-    static callLogin = async () => {
-        const janelaLogin = await Login.janelaLogin(document.body, this.imgLocal, () => { this.pesquisar({ 'login': 'Maria' }) }, 'Login')
+    static callLogin = async (apiServer) => {
+        const janelaLogin = await Login.janelaLogin(document.body, this.imgLocal, () => { this.pesquisar(apiServer) }, 'Login')
     }
-    static pesquisar = () => {
-        this.apiServer = sessionStorage.getItem('servidor')
+    static pesquisar = (apiServer) => {
         if (Login.retorno.botao == 'mrLogin') {
-            const apiColab = this.apiServer+`usuario/login/?LOG_USER=${Login.retorno.user}&LOG_PASSWO=${Login.retorno.password}`
+            const apiColab = apiServer+`usuario/login/?LOG_USER=${Login.retorno.user}&LOG_PASSWO=${Login.retorno.password}`
             fetch(apiColab)
                 .then(res => res.json())
                 .then(retorno => {
@@ -492,7 +490,8 @@ class LoginUser {
                     else {
                         sessionStorage.setItem('logUser', retorno[0].USO_NOME)
                         sessionStorage.setItem('logId', retorno[0].USO_ID)
-                        if (window.location.pathname.indexOf('index.html') >=0){
+                        console.log(window.location.pathname)
+                        if (window.location.pathname.indexOf('/') >=0){
                             document.querySelector('#menuIdUser').innerHTML = retorno[0].USO_ID;
                             document.querySelector('#menuNomeUser').innerHTML = retorno[0].USO_NOME;
                         }
@@ -514,7 +513,7 @@ class LoginUser {
                             body: raw,
                             redirect: 'follow'
                         };
-                        fetch(this.apiServer + 'token', requestOptions)
+                        fetch(apiServer + 'token', requestOptions)
                             .then(response => response.json())
                             .then(result => {
                                 sessionStorage.setItem('userToken', result[0].TOK_CHAVE)
@@ -525,7 +524,7 @@ class LoginUser {
                 })
         }
         if (Login.retorno.botao == 'mrGravar') {
-            const apiColab = `${this.apiServer}usuario/email/?LOG_USER=${Login.retorno.user}`
+            const apiColab = `${apiServer}usuario/email/?LOG_USER=${Login.retorno.user}`
             fetch(apiColab)
                 .then(res => res.json())
                 .then(retorno => {
@@ -543,7 +542,7 @@ class LoginUser {
                             body: raw,
                             redirect: 'follow'
                         };
-                        fetch(this.thpiServer + 'usuario/password', requestOptions)
+                        fetch(apiServer + 'usuario/password', requestOptions)
                             .then(response => response.json())
                             .then(result => {
                                 if (retorno.length <= 0) {
@@ -551,7 +550,7 @@ class LoginUser {
                                 }
                                 else {
                                     Login.hide()
-                                    callLogin()
+                                    callLogin(apiServer)
                                 }
                             })
                             .catch(error => console.log('error', error));
@@ -561,6 +560,7 @@ class LoginUser {
         }
     }
     static prorrogaToke = () =>{
+        var apiServer = sessionStorage.getItem('servidor')
         var tokValida =  new Date().getTime()
         tokValida = (this.tokenValidade / 6000)
         var myHeaders = new Headers();
@@ -573,7 +573,7 @@ class LoginUser {
             body: raw,
             redirect: 'follow'
         };
-        fetch(this.apiServer + 'token', requestOptions)
+        fetch(apiServer + 'token', requestOptions)
             .then(response => response.json())
             .then(result => {
             })
@@ -592,7 +592,7 @@ class LoginUser {
             body: raw,
             redirect: 'follow'
         };
-        fetch(this.apiServer + 'token', requestOptions)
+        fetch(apiServer + 'token', requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result)

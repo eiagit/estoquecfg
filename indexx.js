@@ -26,8 +26,6 @@ fetch(arqConfig)
      apiServer = sessionStorage.getItem('servidor')
 })
 
-
-
 menuTodos.forEach((ele,id)=>{
     ele.addEventListener('click',()=>{
         divMenu.classList.toggle('ocultar')    
@@ -99,7 +97,7 @@ btnCfgMenu.addEventListener("click",(evt)=>{
 const loginUser =  ()=>{
     utkit.LoginUser.imgLocal='./img/eia_cl.png'
     new Promise((resolve,reject)=> { 
-        resolve(utkit.LoginUser.callLogin())
+        resolve(utkit.LoginUser.callLogin(apiServer))
     }).then(()=>{
         menuIdUser.innerHTML = sessionStorage.getItem('logId')
         menuNomeUser.innerHTML = sessionStorage.getItem('logUser')  
@@ -142,12 +140,12 @@ const tokenOk = async ()=>{
         else {
             utkit.LoginUser.imgLocal= './img/eia_cl.png'
             utkit.LoginUser.tokenValidade = (6000*100)
-            await utkit.LoginUser.callLogin()
+            await utkit.LoginUser.callLogin(apiServer)
         }
     }catch{
         utkit.LoginUser.imgLocal= './img/eia_cl.png'
         utkit.LoginUser.tokenValidade = (6000*100)
-        await utkit.LoginUser.callLogin()
+        await utkit.LoginUser.callLogin(apiServer)
     }
 }
 
