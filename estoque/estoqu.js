@@ -17,31 +17,6 @@ var contatosDoFornecedor = undefined
 var dadosdoProduto = undefined
 
 const apiServer = sessionStorage.getItem('servidor')
-const tokenOk = async ()=>{
-    const api = apiServer+`token?TOK_USUARI=${sessionStorage.getItem('logId')}&TOK_CHAVE=${sessionStorage.getItem('userToken')}`
-    var retorno = undefined
-    await utkit.LoginUser.checkaToken(api)
-    .then( (retor)=>{
-        retorno = retor
-    })
-    try{
-    if(retorno) {
-        utkit.LoginUser.tokenAtual = sessionStorage.getItem('userToken')
-        utkit.LoginUser.tokenValidade = (6000*100)
-        utkit.LoginUser.prorrogaToke()
-        }
-        else {
-            utkit.LoginUser.imgLocal= '../img/eia_cl.png'
-            utkit.LoginUser.tokenValidade = (6000*100)
-            await utkit.LoginUser.callLogin()
-        }
-    }catch{
-        utkit.LoginUser.imgLocal= '../img/eia_cl.png'
-        utkit.LoginUser.tokenValidade = (6000*100)
-        await utkit.LoginUser.callLogin()
-    }
-}
-tokenOk()
 
 const dgDados={
     destino : '#dataGridJ',
@@ -56,8 +31,8 @@ const dgDados={
         "onclose" : { "hide" : false , "funcao" : ()=>{}},
         icones : {
             switch : { hide: false  , name: 'lock-open-outline', func: ()=>{}},
-            upstk : { hide: false  , name: 'arrow-up-outline', func: ()=>{entrada()}},
-            dowstk : { hide: false  , name: 'arrow-down-outline', func: ()=>{saida()}},
+            upstk : { hide: false  , name: 'arrow-down-outline', func: ()=>{entrada()}},
+            dowstk : { hide: false  , name: 'arrow-up-outline', func: ()=>{saida()}},
             forn   : { hide: false  , name: 'business-outline'  , func: ()=>{verFornecedor()}},
             prod   : { hide: false  , name: 'search-outline'  , func: ()=>{janelaProduto()}},
         }

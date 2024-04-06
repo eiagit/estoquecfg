@@ -480,6 +480,7 @@ class LoginUser {
         const janelaLogin = await Login.janelaLogin(document.body, this.imgLocal, () => { this.pesquisar({ 'login': 'Maria' }) }, 'Login')
     }
     static pesquisar = () => {
+        this.apiServer = sessionStorage.getItem('servidor')
         if (Login.retorno.botao == 'mrLogin') {
             const apiColab = this.apiServer+`usuario/login/?LOG_USER=${Login.retorno.user}&LOG_PASSWO=${Login.retorno.password}`
             fetch(apiColab)
@@ -491,8 +492,7 @@ class LoginUser {
                     else {
                         sessionStorage.setItem('logUser', retorno[0].USO_NOME)
                         sessionStorage.setItem('logId', retorno[0].USO_ID)
-
-                        if (window.location.pathname=='/backof/'){
+                        if (window.location.pathname.indexOf('index.html') >=0){
                             document.querySelector('#menuIdUser').innerHTML = retorno[0].USO_ID;
                             document.querySelector('#menuNomeUser').innerHTML = retorno[0].USO_NOME;
                         }

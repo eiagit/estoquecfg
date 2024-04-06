@@ -20,32 +20,6 @@ const divPreco      = document.querySelector('#divPreco')
 const divGeral      = document.querySelector('#divGeral')
 const apiServer = sessionStorage.getItem('servidor')
 
-const tokenOk = async ()=>{
-    const api = apiServer+`token?TOK_USUARI=${sessionStorage.getItem('logId')}&TOK_CHAVE=${sessionStorage.getItem('userToken')}`
-    var retorno = undefined
-    await utkit.LoginUser.checkaToken(api)
-    .then( (retor)=>{
-        retorno = retor
-    })
-    try{
-    if(retorno) {
-        utkit.LoginUser.tokenAtual = sessionStorage.getItem('userToken')
-        utkit.LoginUser.tokenValidade = (6000*100)
-        utkit.LoginUser.prorrogaToke()
-        }
-        else {
-            utkit.LoginUser.imgLocal= '../img/eia_cl.png'
-            utkit.LoginUser.tokenValidade = (6000*100)
-            await utkit.LoginUser.callLogin()
-        }
-    }catch{
-        utkit.LoginUser.imgLocal= '../img/eia_cl.png'
-        utkit.LoginUser.tokenValidade = (6000*100)
-        await utkit.LoginUser.callLogin()
-    }
-}
-tokenOk()
-
 divTitulo.style='display: flex; flex-direction : row ; justify-content : space-between !important; '
 const divFata = utkit.criaGrupCampos(divTitulo,'div1')
 divFata.style = 'display:flex;'

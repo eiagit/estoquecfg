@@ -17,14 +17,16 @@ const menuTodos = document.querySelectorAll('.divLinMenuA')
 const menuIdUser = document.querySelector('#menuIdUser')
 const menuNomeUser = document.querySelector('#menuNomeUser')
 const arqConfig = './config.cfg'
+var apiServer = undefined
 fetch(arqConfig)
 .then(res=>res.json())
 .then(res=>{
     sessionStorage.setItem('servidor',res.servidor);
      sessionStorage.setItem('versao',res.versao)
+     apiServer = sessionStorage.getItem('servidor')
 })
 
-const apiServer = sessionStorage.getItem('servidor')
+
 
 menuTodos.forEach((ele,id)=>{
     ele.addEventListener('click',()=>{
@@ -35,20 +37,25 @@ btnMenu.addEventListener('click',(evt)=>{
    divMenu.classList.toggle('ocultar')
 })
 menuop1.addEventListener('click',(evt)=>{
+    tokenOk()
     janelaFrame.setAttribute('src','./colaboradores/colab.html')
 })
 menuop2.addEventListener('click',(evt)=>{
+    tokenOk()
     janelaFrame.setAttribute('src','./fornecedores/fornec.html')
 })
 menuop3.addEventListener('click',(evt)=>{
+    tokenOk()
     janelaFrame.setAttribute('src','./produtos/produt.html')
 })
 menuop4.addEventListener('click',(evt)=>{
+    tokenOk()
     janelaFrame.setAttribute('src','./estoque/estoqu.html')
     janelaFrame.setAttribute('date-userName',menuNomeUser.innerHTML)
     janelaFrame.setAttribute('date-userId',menuIdUser.innerHTML)
 })
 menuop5.addEventListener('click',(evt)=>{
+    tokenOk()
     janelaFrame.setAttribute('src','./venda/venda.html')
     janelaFrame.setAttribute('date-userName',menuNomeUser.innerHTML)
     janelaFrame.setAttribute('date-userId',menuIdUser.innerHTML)
@@ -82,15 +89,23 @@ btnCfgMenu.addEventListener("click",(evt)=>{
         ]
     
     }  
-    utkit.MenuFlutuante.show(dbMenu)
-
+    new Promise((resolve, reject) => {
+        resolve(tokenOk())
+    }).then(() => {
+        utkit.MenuFlutuante.show(dbMenu)
+    })
 })
 
-const loginUser = async ()=>{
+const loginUser =  ()=>{
     utkit.LoginUser.imgLocal='./img/eia_cl.png'
-    await  utkit.LoginUser.callLogin()
-    
-}
+    new Promise((resolve,reject)=> { 
+        resolve(utkit.LoginUser.callLogin())
+    }).then(()=>{
+        menuIdUser.innerHTML = sessionStorage.getItem('logId')
+        menuNomeUser.innerHTML = sessionStorage.getItem('logUser')  
+    })
+}    
+
 
 const limpaToken =()=>{
     utkit.LoginUser.limpaTokenVencido()
@@ -110,5 +125,29 @@ const logOffUser =()=>{
     janelaFrame.innerHTML='';
 
 
+}
+const tokenOk = async ()=>{
+    const api = apiServer+`token?TOK_USUARI=${sessionStorage.getItem('logId')}&TOK_CHAVE=${sessionStorage.getItem('userToken')}`
+    var retorno = undefined
+    await utkit.LoginUser.checkaToken(api)
+    .then( (retor)=>{
+        retorno = retor
+    })
+    try{
+    if(retorno) {
+        utkit.LoginUser.tokenAtual = sessionStorage.getItem('userToken')
+        utkit.LoginUser.tokenValidade = (6000*100)
+        utkit.LoginUser.prorrogaToke()
+        }
+        else {
+            utkit.LoginUser.imgLocal= './img/eia_cl.png'
+            utkit.LoginUser.tokenValidade = (6000*100)
+            await utkit.LoginUser.callLogin()
+        }
+    }catch{
+        utkit.LoginUser.imgLocal= './img/eia_cl.png'
+        utkit.LoginUser.tokenValidade = (6000*100)
+        await utkit.LoginUser.callLogin()
+    }
 }
 
