@@ -490,7 +490,6 @@ class LoginUser {
                     else {
                         sessionStorage.setItem('logUser', retorno[0].USO_NOME)
                         sessionStorage.setItem('logId', retorno[0].USO_ID)
-                        console.log(window.location.pathname)
                         if (window.location.pathname.indexOf('/') >=0){
                             document.querySelector('#menuIdUser').innerHTML = retorno[0].USO_ID;
                             document.querySelector('#menuNomeUser').innerHTML = retorno[0].USO_NOME;
@@ -559,8 +558,7 @@ class LoginUser {
                 })
         }
     }
-    static prorrogaToke = () =>{
-        var apiServer = sessionStorage.getItem('servidor')
+    static prorrogaToke = (apiServer) =>{
         var tokValida =  new Date().getTime()
         tokValida = (this.tokenValidade / 6000)
         var myHeaders = new Headers();

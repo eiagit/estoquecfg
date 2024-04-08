@@ -19,13 +19,12 @@ const menuNomeUser = document.querySelector('#menuNomeUser')
 const arqConfig = './config.cfg'
 var apiServer = undefined;
 
-
 fetch(arqConfig)
 .then(res=>res.json())
 .then(res=>{
     sessionStorage.setItem('servidor',res.servidor);
-     sessionStorage.setItem('versao',res.versao)
-     apiServer = sessionStorage.getItem('servidor')
+    sessionStorage.setItem('versao',res.versao)
+    apiServer = sessionStorage.getItem('servidor')
 })
 
 menuTodos.forEach((ele,id)=>{
@@ -38,7 +37,7 @@ btnMenu.addEventListener('click',(evt)=>{
 })
 menuop1.addEventListener('click',(evt)=>{
     new Promise((resolve,reject)=>{
-        resolve(tokenOk())
+        tokenOk()
     }).then(janelaFrame.setAttribute('src','./colaboradores/colab.html'))
 })
 menuop2.addEventListener('click',(evt)=>{
@@ -62,8 +61,6 @@ menuop5.addEventListener('click',(evt)=>{
     janelaFrame.setAttribute('date-userId',menuIdUser.innerHTML)
 })
 menuop6.addEventListener('click',(evt)=>{
-    //janelaFrame.setAttribute('src','../lab.html')
-    //const base = document.querySelector('#base')
     sessionStorage.clear()
     localStorage.clear()
     window.open("_blank","_self")
@@ -88,10 +85,9 @@ btnCfgMenu.addEventListener("click",(evt)=>{
              { nome : 'Limpa Token', src : './img/trash.svg', acao : ()=>{limpaToken()}}, 
              { nome : 'Fechar', src : './img/close.svg', acao : ()=>{utkit.MenuFlutuante.hide() }},
         ]
-    
     }  
     new Promise((resolve, reject) => {
-        resolve(tokenOk())
+        tokenOk()
     }).then(() => {
         utkit.MenuFlutuante.show(dbMenu)
     })
@@ -99,8 +95,9 @@ btnCfgMenu.addEventListener("click",(evt)=>{
 
 const loginUser =  ()=>{
     utkit.LoginUser.imgLocal='./img/eia_cl.png'
+//    apiServer =='/' ? apiServer=sessionStorage.getItem('servidor') : apiServer
     new Promise((resolve,reject)=> { 
-        resolve(utkit.LoginUser.callLogin(apiServer))
+        utkit.LoginUser.callLogin(apiServer)
     }).then(()=>{
         menuIdUser.innerHTML = sessionStorage.getItem('logId')
         menuNomeUser.innerHTML = sessionStorage.getItem('logUser')  
@@ -124,8 +121,6 @@ const logOffUser =()=>{
     menuIdUser.innerHTML=':.Id'
     menuNomeUser.innerHTML=':.User'
     janelaFrame.innerHTML='';
-
-
 }
 const tokenOk = async ()=>{
     const api = apiServer+`token?TOK_USUARI=${sessionStorage.getItem('logId')}&TOK_CHAVE=${sessionStorage.getItem('userToken')}`
@@ -138,7 +133,7 @@ const tokenOk = async ()=>{
     if(retorno) {
         utkit.LoginUser.tokenAtual = sessionStorage.getItem('userToken')
         utkit.LoginUser.tokenValidade = (6000*100)
-        utkit.LoginUser.prorrogaToke()
+        utkit.LoginUser.prorrogaToke(apiServer)
         }
         else {
             utkit.LoginUser.imgLocal= './img/eia_cl.png'
