@@ -6,8 +6,10 @@ const janelaGrid = document.querySelector('#dataGridJ')
 const btnCadastrar = document.querySelector('#colabCadastrar')
 const btncolabPesquisar  = document.querySelector('#colabPesquisar')
 const filtro = document.querySelector('#inputFiltro')
-const apiServer = sessionStorage.getItem('servidor')
-
+var fotoPertilUsuario = undefined
+var telefonesDoUsuario = undefined
+var apiServer = undefined
+var listaTipoUsuario = []
 const dgDados={
     destino : '#dataGridJ',
     local   : 'pt-br'   ,
@@ -34,14 +36,6 @@ const dgDados={
         { campo : 'TIU_NOME'  , titulo: 'Tipo'                  , formato: 'g'   , width: '170px', align: 'left', soma : false},        
     ]
 }
-var listaTipoUsuario = []
-const apiTipoUsuario = apiServer+"tabelas/tipousuario"
-fetch(apiTipoUsuario)
-.then(res=>res.json())
-.then(retorno=>{
-    listaTipoUsuario=retorno;
-})
-
 const carregaColaboradores = () => {
     const apiColab = apiServer+"usuario/todos"
     fetch(apiColab)
@@ -59,9 +53,20 @@ const carregaColaboradores = () => {
 //            }, 2000);
         })
 }
-carregaColaboradores()
 
-var telefonesDoUsuario = undefined
+new Promise ((resolve,reject)=>{
+    apiServer = sessionStorage.getItem('servidor')
+    resolve()
+}).then(()=>carregaColaboradores())
+.then(()=>{
+const apiTipoUsuario = apiServer+"tabelas/tipousuario"
+fetch(apiTipoUsuario)
+.then(res=>res.json())
+.then(retorno=>{
+    listaTipoUsuario=retorno;
+})
+})
+
 const carregaTelefones = async (usuID) => {
     const apiColab = apiServer+"telefone/?TEL_USUARI="+usuID
     await fetch(apiColab)
@@ -539,7 +544,6 @@ const janelaColab = () => {
     divRodape.appendChild(btncancela);
 }
 
-var fotoPertilUsuario = undefined
 const converteImagemBase64 =  (localDestino,arquivoImagem)=>{
     const obj = arquivoImagem;
     const reader = new FileReader()
@@ -921,7 +925,6 @@ const toggleAtivar = ()=>{
         })
         .catch(error => console.log('error', error));
 }
-
 
 btncolabPesquisar.addEventListener('click', (evt) => {
     janelaColab()
