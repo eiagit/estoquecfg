@@ -9,7 +9,8 @@ const filtro = document.querySelector('#inputFiltro')
 var fotoLogo = undefined
 var telefonesDoUsuario = undefined
 var contatosDoFornecedor = undefined
-const apiServer = sessionStorage.getItem('servidor')
+var apiServer = undefined
+
 
 const dgDados={
     destino : '#dataGridJ',
@@ -54,7 +55,12 @@ const carregaFornec = () => {
                 })
         })
 }
-carregaFornec()
+new Promise((resolve,reject)=>{
+   apiServer = sessionStorage.getItem('servidor') 
+   resolve()
+})
+.then(()=>{carregaFornec()})
+
 
 
 const carregaContatos = async (fcoFornec) => {

@@ -38,6 +38,7 @@ btnMenu.addEventListener('click',(evt)=>{
 menuop1.addEventListener('click',(evt)=>{
     new Promise((resolve,reject)=>{
         tokenOk()
+        resolve()
     }).then(janelaFrame.setAttribute('src','./colaboradores/colab.html'))
 })
 menuop2.addEventListener('click',(evt)=>{

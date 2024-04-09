@@ -4,7 +4,6 @@ import { Cxmsg } from "https://eiagit.github.io/java/cxmsg.js";
 import utkit from  './../utkit/utkit.js'
 const btnCadastrar = document.querySelector('#btnCadastrar')
 const btnPesquisar  = document.querySelector('#btnPesquisar')
-const apiServer = sessionStorage.getItem('servidor')
 btnCadastrar.setAttribute('backgroundColor','rgb(255,255,255)')
 var registroSelected = {'FOR_ID' : null}
 var listaTipos  = []
@@ -12,46 +11,9 @@ var listaStatus = []
 var telefonesDoUsuario = undefined
 var contatosDoFornecedor = undefined
 var dadosdoProduto = undefined
-var api = apiServer+"tipo"
-
-const tokenOk = async ()=>{
-    const api = apiServer+`token?TOK_USUARI=${sessionStorage.getItem('logId')}&TOK_CHAVE=${sessionStorage.getItem('userToken')}`
-    var retorno = undefined
-    await utkit.LoginUser.checkaToken(api)
-    .then( (retor)=>{
-        retorno = retor
-    })
-    try{
-    if(retorno) {
-        utkit.LoginUser.tokenAtual = sessionStorage.getItem('userToken')
-        utkit.LoginUser.tokenValidade = (6000*100)
-        utkit.LoginUser.prorrogaToke()
-        }
-        else {
-            utkit.LoginUser.imgLocal= '../img/eia_cl.png'
-            utkit.LoginUser.tokenValidade = (6000*100)
-            await utkit.LoginUser.callLogin()
-        }
-    }catch{
-        utkit.LoginUser.imgLocal= '../img/eia_cl.png'
-        utkit.LoginUser.tokenValidade = (6000*100)
-        await utkit.LoginUser.callLogin()
-    }
-}
-tokenOk()
-
-fetch(api)
-.then(res=>res.json())
-.then(retorno=>{
-    listaTipos=retorno;
-})
-
-api = apiServer+"status"
-fetch(api)
-.then(res=>res.json())
-.then(retorno=>{
-    listaStatus=retorno;
-})
+var apiServer = undefined
+var api = undefined
+var teste = undefined
 
 const dgDados={
     destino : '#dataGridJ',
@@ -81,7 +43,6 @@ const dgDados={
     ]
 }
 
-var teste = undefined
 const carregaProdutos = () => {
     const apiColab = apiServer+"Produtos"
     fetch(apiColab)
@@ -97,7 +58,28 @@ const carregaProdutos = () => {
                 })
         })
 }
-carregaProdutos()
+
+new Promise((resolve, reject) => {
+    apiServer = sessionStorage.getItem('servidor')
+    resolve()
+}).then(() => {
+    carregaProdutos()
+}).then(() => {
+    api = apiServer + "tipo"
+    fetch(api)
+        .then(res => res.json())
+        .then(retorno => {
+            listaTipos = retorno;
+        })
+}).then(() => {
+    api = apiServer + "status"
+    fetch(api)
+        .then(res => res.json())
+        .then(retorno => {
+            listaStatus = retorno;
+        })
+})
+
         
 const refreshLista = async () => {
      const janelaBase =  document.querySelector('#dgBase')

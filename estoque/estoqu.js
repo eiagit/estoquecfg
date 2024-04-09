@@ -15,8 +15,9 @@ const btnSaída  = document.querySelector('#btnSaida')
 const btnRelatorios  = document.querySelector('#btnRelatorio')
 var contatosDoFornecedor = undefined
 var dadosdoProduto = undefined
+var apiServer = undefined
 
-const apiServer = sessionStorage.getItem('servidor')
+
 
 const dgDados={
     destino : '#dataGridJ',
@@ -46,6 +47,28 @@ const dgDados={
         { campo : 'PRO_PRECO' , titulo: 'Preço'                 , formato : 'm' , width: '100px', align: 'right', soma : true},                
     ]
 }
+const carregaProdutos = () => {
+    const apiColab = apiServer+"Produtos"
+    fetch(apiColab)
+        .then(res => res.json())
+        .then(retorno => {
+            DataGrid.criaLista(dgDados, retorno)
+                retorno.map((ite, id) => {
+                    if (ite.PRO_STATUS == 0) {
+                        document.querySelector('#dgLinha'+id).lastChild.firstChild.name='lock-closed-outline'
+                        document.querySelector('#dgLinha'+id).lastChild.firstChild.style.color="red"
+                    }
+                    else{document.querySelector('#dgLinha'+id).lastChild.firstChild.style.color="green"}
+                })
+        })
+}
+new Promise((resolve, reject) => {
+    apiServer = sessionStorage.getItem('servidor')
+    resolve()
+}).then(() => {
+    carregaProdutos()
+})
+
 const carregaContatos = async (fcoFornec) => {
     const apiColab = apiServer+"fornecedor/contatos/?FCO_FORNEC="+DataGrid.campoRetorno.PRO_FORNEC
     await fetch(apiColab)
@@ -55,6 +78,7 @@ const carregaContatos = async (fcoFornec) => {
                 return retorno
             })
 }
+
 const janelaProduto = () =>{
     const apiColab = apiServer+"Produto/id/?PRO_ID="+DataGrid.campoRetorno.PRO_ID
     fetch(apiColab)
@@ -217,22 +241,7 @@ const addContato = (colabid,id, nome,destino,tipo) => {
 
 }
 
-const carregaProdutos = () => {
-    const apiColab = apiServer+"Produtos"
-    fetch(apiColab)
-        .then(res => res.json())
-        .then(retorno => {
-            DataGrid.criaLista(dgDados, retorno)
-                retorno.map((ite, id) => {
-                    if (ite.PRO_STATUS == 0) {
-                        document.querySelector('#dgLinha'+id).lastChild.firstChild.name='lock-closed-outline'
-                        document.querySelector('#dgLinha'+id).lastChild.firstChild.style.color="red"
-                    }
-                    else{document.querySelector('#dgLinha'+id).lastChild.firstChild.style.color="green"}
-                })
-        })
-}
-carregaProdutos()
+
 const refreshProdutos = async () => {
    await DataGrid.hideLista()
    carregaProdutos()
